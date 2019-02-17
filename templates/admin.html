@@ -4,12 +4,28 @@
 
 <h3>Moderate Messages</h3>
 
-{% for message in messages %}
-<p>
-	{{ message.sender }}: {{ message.body }} <br />
-	<a href="/edit/{{ message._id }}">edit</a>
-	<a href="/remove/{{ message._id }}">remove</a>
-</p>
-{% endfor %}
+
+
+<table class="table mt-5">
+	<thead>
+	<tr>
+		<th>Sender</th>
+		<th>Message</th>
+		<th width="220">Action</th>
+	</tr>
+	</thead>
+	<tbody>
+	{% for message in messages %}
+	<tr>
+		<td>{{ message.sender }}</td>
+		<td>{{ message.body }}</td>
+		<td>
+			<a href="/edit/{{ message._id }}" class="btn btn-sm btn-primary">edit</a>
+	<a href="/remove/{{ message._id }}" class="btn btn-sm btn-danger">remove</a>
+		</td>
+	</tr>
+	{% endfor %}
+	</tbody>
+</table>
 
 {% endblock %}

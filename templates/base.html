@@ -1,17 +1,84 @@
 <!doctype html>
-<html>
-	<head>
-		<link href="/static/style.css" rel="stylesheet" />
-		<title>Strucuted Journalism</title>
-	</head>
-	<body>
-		<h1>Structured Journalism</h1>
-		<nav>
-			<a href="/">home</a>
-			<a href="/login">login</a>
-		</nav>
-		{% block content %}
-		{% endblock %}
-		<footer>This is footer!</footer>
-	</body>
+<html class="h-100">
+<head>
+    <link href="/static/style.css" rel="stylesheet"/>
+    <title>Strucuted Journalism</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link href="/static/favicon.ico" rel="icon" type="image/x-icon" />
+</head>
+<body class="d-flex flex-column h-100">
+<header>
+    <!-- Fixed navbar -->
+    <nav class="navbar navbar-expand-md navbar-light fixed-top warning-color lighten-5">
+        <div class="container">
+            <a class="navbar-brand" href="#">Structured Journalism</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
+                    aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item{% if request.path == url_for('home') %} active{% endif %}">
+                        <a href="{{ url_for('home') }}" class="nav-link">Home</a>
+                    </li>
+
+
+                </ul>
+
+                <ul class="navbar-nav flex-row ml-md-auto d-none d-md-flex">
+                    {% if get_user_from_session() %}
+                    <li class="nav-item{% if request.path == url_for('admin') %} active{% endif %}">
+                        <a class="nav-link" href="{{ url_for('admin') }}">Manage</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('logout') }}">Logout</a>
+                    </li>
+                    {% else %}
+                    <li class="nav-item{% if request.path == url_for('login') %} active{% endif %}">
+                        <a class="nav-link" href="{{ url_for('login') }}">Login</a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<main role="main" class="flex-shrink-0 mt-5">
+    <div class="mt-3">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        {% for category, message in messages %}
+        <div class="alert alert-{{ category }}" role="alert">
+            {{ message }}
+        </div>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+        <div class="container mt-5">
+            {% block content %}
+            {% endblock %}
+        </div>
+    </div>
+</main>
+
+<footer class="footer mt-auto py-3">
+    <div class="container">
+        <span class="text-muted">Flask</span>
+    </div>
+</footer>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
+        integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+
+</body>
 </html>

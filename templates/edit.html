@@ -3,13 +3,20 @@
 {% block content %}
 
 <h3>Edit a message</h3>
+
 <form action="/edit/{{ message._id }}" method="post">
-	nickname: <br />
-	<input type="text" name="sender" value="{{ message.sender }}" />
-	<br />
-	message: <br />
-	<textarea name="body" rows="5" cols="50">{{ message.body }}</textarea>
-	<br />
-	<input type="submit" value="save" >
+	<div class="form-group">
+        <label for="exampleInputNickname">Nick Name</label>
+        <input type="text" name="sender" class="form-control" id="exampleInputNickname" value="{{ message.sender }}"
+               placeholder="Nick Name">
+    </div>
+
+	<div class="form-group">
+        <label for="exampleInputBody">Message</label>
+        <textarea type="text" name="body" class="md-textarea form-control" id="exampleInputBody"
+				  placeholder="Message">{{ message.body }}</textarea>
+    </div>
+	<button type="submit" class="btn btn-primary">Save</button>
 </form>
+
 {% endblock %}
